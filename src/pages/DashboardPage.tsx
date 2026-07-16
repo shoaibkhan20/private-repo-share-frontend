@@ -31,6 +31,11 @@ interface ShareLink {
   id: number;
   repo_id: number;
   repo_name: string;
+  repo?: {
+    id: number;
+    name: string;
+    full_name: string;
+  };
   slug: string;
   allowed_emails: string[] | null;
   expires_at: string | null;
@@ -389,7 +394,9 @@ export default function DashboardPage() {
                 <div key={link.id} className="premium-card rounded-2xl p-5 border-l-4 border-l-modernGray-900 transition-all hover:shadow-md">
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="font-bold text-modernGray-900 text-sm mb-1">{link.repo_name}</h3>
+                      <h3 className="font-bold text-modernGray-900 text-sm mb-1">
+                        {link.repo?.full_name || link.repo_name || 'Repository'}
+                      </h3>
                       <div className="flex flex-wrap items-center gap-3 mt-1 text-[10px] font-bold uppercase tracking-wider text-silver-400">
                         {link.expires_at ? (
                           <span className="flex items-center gap-1">
@@ -435,7 +442,7 @@ export default function DashboardPage() {
                         type="text"
                         readOnly
                         value={`${window.location.origin}/s/${link.slug}`}
-                        className="block w-full text-xs border border-silver-200 rounded-xl bg-silver-50 px-4 py-2.5 text-silver-500 font-medium group-hover:border-silver-300 transition-all focus:ring-0 focus:border-silver-200 outline-none truncate"
+                        className="block w-full text-xs border border-silver-200 rounded-xl bg-silver-50 px-4 py-2.5 text-silver-500 font-mono group-hover:border-silver-300 transition-all focus:ring-0 focus:border-silver-200 outline-none truncate"
                       />
                     </div>
                     <button
