@@ -103,57 +103,63 @@ export default function VisitorGatePage() {
 
   if (status === 'checking') {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-        <Loader2 className="h-10 w-10 text-gray-900 animate-spin" />
-        <p className="mt-4 text-gray-500 font-medium">Validating secure link...</p>
+      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center relative overflow-hidden bg-grid-pattern">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
+        <Loader2 className="h-12 w-12 text-indigo-500 animate-spin mb-4" />
+        <p className="text-zinc-400 font-medium tracking-wide">Validating secure link...</p>
       </div>
     );
   }
 
   if (status === 'invalid') {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 max-w-md w-full text-center">
-          <div className="mx-auto h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-            <Shield className="h-8 w-8 text-red-600" />
+      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-4 relative overflow-hidden bg-grid-pattern">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-red-900/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="glass-card p-8 rounded-2xl max-w-md w-full text-center relative z-10 border-red-900/30">
+          <div className="mx-auto h-16 w-16 bg-red-950/50 border border-red-500/30 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-red-500/10 animate-pulse">
+            <Shield className="h-8 w-8 text-red-500" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
-          <p className="text-gray-500">This link has expired, been revoked, or does not exist.</p>
+          <h2 className="text-2xl font-bold text-zinc-100 mb-2">Access Denied</h2>
+          <p className="text-zinc-400 text-sm">This link has expired, been revoked, or does not exist.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-zinc-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden bg-grid-pattern">
+      {/* Decorative backdrop glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/3 -translate-x-1/2 w-[350px] h-[350px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div className="flex justify-center">
-          <div className="h-14 w-14 bg-gray-900 rounded-xl flex items-center justify-center shadow-lg">
-            <Shield className="h-7 w-7 text-white" />
+          <div className="h-16 w-16 bg-zinc-900/80 border border-zinc-800 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/10 backdrop-blur-md">
+            <Shield className="h-8 w-8 text-indigo-400" />
           </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-100 via-indigo-200 to-zinc-100 bg-clip-text text-transparent">
           Secure Repository Access
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className="mt-2 text-center text-sm text-zinc-400 max-w-xs mx-auto">
           {status === 'email_entry' 
             ? 'Verify your identity to view this repository.'
             : `Enter the code sent to ${email}`}
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4 sm:px-0">
+        <div className="glass-card py-8 px-6 sm:px-10 rounded-2xl">
           
           {status === 'email_entry' && (
             <form onSubmit={handleSendCode} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="email" className="block text-sm font-medium text-zinc-300">
                   Email address
                 </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
+                <div className="mt-1.5 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <Mail className="h-4 w-4 text-zinc-500" />
                   </div>
                   <input
                     id="email"
@@ -161,7 +167,7 @@ export default function VisitorGatePage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-10 sm:text-sm border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900 p-3 border"
+                    className="glass-input block w-full pl-10 sm:text-sm p-3"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -170,10 +176,9 @@ export default function VisitorGatePage() {
               <button
                 type="submit"
                 disabled={loading || !email}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none disabled:opacity-70 transition-colors"
+                className="btn-glow w-full flex justify-center items-center py-3 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-zinc-900 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 transform active:scale-[0.98]"
               >
-                {loading ? <Loader2 className="animate-spin h-5 w-5 mr-2" /> : null}
-                {/* Send Verification Code */}
+                {loading ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : null}
                 Access Repository
               </button>
             </form>
@@ -182,12 +187,19 @@ export default function VisitorGatePage() {
           {status === 'otp_entry' && (
             <form onSubmit={handleVerify} className="space-y-6">
               <div>
-                <label htmlFor="otp" className="block text-sm font-medium text-gray-700">
-                  6-Digit Code
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <KeyRound className="h-5 w-5 text-gray-400" />
+                <div className="flex justify-between items-center mb-1">
+                  <label htmlFor="otp" className="block text-sm font-medium text-zinc-300">
+                    6-Digit Code
+                  </label>
+                  {attemptsLeft < 5 && (
+                    <span className="text-xs text-amber-500 font-semibold animate-pulse">
+                      {attemptsLeft} attempts remaining
+                    </span>
+                  )}
+                </div>
+                <div className="mt-1.5 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <KeyRound className="h-4 w-4 text-zinc-500" />
                   </div>
                   <input
                     id="otp"
@@ -196,7 +208,7 @@ export default function VisitorGatePage() {
                     maxLength={6}
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    className="block w-full pl-10 sm:text-lg tracking-widest border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900 p-3 border text-center font-mono"
+                    className="glass-input block w-full pl-10 sm:text-lg tracking-widest text-center font-mono p-3 focus:ring-indigo-500 focus:border-indigo-500"
                     placeholder="000000"
                   />
                 </div>
@@ -205,9 +217,9 @@ export default function VisitorGatePage() {
               <button
                 type="submit"
                 disabled={loading || otp.length !== 6}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none disabled:opacity-70 transition-colors"
+                className="btn-glow w-full flex justify-center items-center py-3 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-zinc-900 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 transform active:scale-[0.98]"
               >
-                {loading ? <Loader2 className="animate-spin h-5 w-5 mr-2" /> : <ArrowRight className="h-5 w-5 mr-2" />}
+                {loading ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : <ArrowRight className="h-4 w-4 mr-2" />}
                 Verify & Access
               </button>
 
@@ -215,7 +227,7 @@ export default function VisitorGatePage() {
                 <button
                   type="button"
                   onClick={() => setStatus('email_entry')}
-                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors font-medium"
                 >
                   Use a different email
                 </button>
