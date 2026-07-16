@@ -26,11 +26,11 @@
   }
 
   .modern-button-primary {
-    @apply modern-button bg-modernGray-900 text-white hover:bg-modernGray-800 shadow-sm hover:shadow-modernGray-900/20;
+    @apply modern-button bg-modernGray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-gray-900/20;
   }
 
   .modern-button-secondary {
-    @apply modern-button bg-white border border-silver-200 text-modernGray-700 hover:bg-silver-50 hover:border-silver-300;
+    @apply modern-button bg-white border border-silver-200 text-gray-700 hover:bg-silver-50 hover:border-silver-300;
   }
 
   .custom-scrollbar::-webkit-scrollbar {
