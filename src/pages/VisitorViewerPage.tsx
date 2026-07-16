@@ -35,6 +35,7 @@ export default function VisitorViewerPage() {
   const [currentFilePath, setCurrentFilePath] = useState<string | null>(null);
   const [fileContent, setFileContent] = useState<string>('');
   const [fileLoading, setFileLoading] = useState(false);
+  const [loadingFolders, setLoadingFolders] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!slug) return;
@@ -107,6 +108,7 @@ export default function VisitorViewerPage() {
     }
 
     // Otherwise fetch children
+    setLoadingFolders(prev => new Set(prev).add(node.path));
     try {
       const { data } = await api.get(`/s/${slug}/view?type=tree&path=${encodeURIComponent(node.path)}`);
 
@@ -135,6 +137,12 @@ export default function VisitorViewerPage() {
       setFileTree(appendChildren(fileTree));
     } catch (error) {
       toast.error('Failed to load folder contents');
+    } finally {
+      setLoadingFolders(prev => {
+        const next = new Set(prev);
+        next.delete(node.path);
+        return next;
+      });
     }
   };
 
@@ -168,7 +176,13 @@ export default function VisitorViewerPage() {
               >
                 <div className="flex items-center justify-center w-4">
                   {node.type === 'tree' ? (
-                    node.isOpen ? <ChevronDown className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} /> : <ChevronRight className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
+                    loadingFolders.has(node.path) ? (
+                      <Loader2 className={`h-3.5 w-3.5 animate-spin ${isActive ? 'text-white' : 'text-silver-400'}`} />
+                    ) : node.isOpen ? (
+                      <ChevronDown className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
+                    ) : (
+                      <ChevronRight className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
+                    )
                   ) : (
                     <FileIcon className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
                   )}
