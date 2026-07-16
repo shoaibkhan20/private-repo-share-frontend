@@ -33,39 +33,32 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden bg-grid-pattern">
-      {/* Decorative backdrop glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/3 -translate-x-1/2 w-[350px] h-[350px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="h-20 w-20 bg-zinc-900/80 border border-zinc-800 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/10 backdrop-blur-md">
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-              <Github className="relative h-11 w-11 text-zinc-100" />
-            </div>
+          <div className="h-16 w-16 bg-gray-900 rounded-xl flex items-center justify-center shadow-lg">
+            <Github className="h-10 w-10 text-white" />
           </div>
         </div>
-        <h2 className="mt-8 text-center text-4xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-100 via-indigo-200 to-zinc-100 bg-clip-text text-transparent">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Private Repo Share
         </h2>
-        <p className="mt-3 text-center text-sm text-zinc-400 max-w-xs mx-auto">
-          Securely share your private GitHub repositories with anyone via time-restricted links.
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Securely share your private GitHub repositories with anyone.
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4 sm:px-0">
-        <div className="glass-card py-8 px-6 sm:px-10 rounded-2xl">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
           <button
             onClick={handleLogin}
             disabled={isLoading}
-            className="btn-glow w-full flex justify-center items-center py-3.5 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-zinc-900 disabled:opacity-75 disabled:cursor-not-allowed transition-all duration-300 transform active:scale-[0.98]"
+            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:opacity-70 transition-colors"
           >
             {isLoading ? (
-              <Loader2 className="animate-spin h-5 w-5 mr-2.5" />
+              <Loader2 className="animate-spin h-5 w-5 mr-2" />
             ) : (
-              <Github className="h-5 w-5 mr-2.5" />
+              <Github className="h-5 w-5 mr-2" />
             )}
             Authorize with GitHub
           </button>

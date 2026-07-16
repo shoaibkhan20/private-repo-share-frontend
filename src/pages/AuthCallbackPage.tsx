@@ -45,11 +45,10 @@ export default function AuthCallbackPage() {
   }, [searchParams, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 relative overflow-hidden bg-grid-pattern">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
-      <Loader2 className="h-10 w-10 animate-spin text-indigo-500 mb-4 relative z-10" />
-      <h2 className="text-lg font-bold tracking-tight text-zinc-100 relative z-10">Authenticating...</h2>
-      <p className="text-xs text-zinc-400 mt-2 relative z-10">Please wait while we verify your credentials.</p>
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+      <Loader2 className="h-12 w-12 text-gray-900 animate-spin mb-4" />
+      <h2 className="text-xl font-semibold text-gray-900">Authenticating...</h2>
+      <p className="text-gray-500 mt-2">Please wait while we verify your credentials.</p>
     </div>
   );
 }
