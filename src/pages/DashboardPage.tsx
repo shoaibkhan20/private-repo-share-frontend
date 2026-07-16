@@ -70,7 +70,7 @@ export default function DashboardPage() {
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
-  const [emails, setEmails] = useState<string>('');
+  const [emails, setEmails] = useState<string>('') ?? null;
   const [expiresAt, setExpiresAt] = useState<string>('');
   const [generating, setGenerating] = useState(false);
   const [generatedSlug, setGeneratedSlug] = useState<string | null>(null);
@@ -131,7 +131,7 @@ export default function DashboardPage() {
 
     try {
       setGenerating(true);
-      const emailList = emails.split(',').map(e => e.trim()).filter(e => e);
+      const emailList = emails ? emails.split(',').map(e => e.trim()).filter(e => e) : [];
 
       const payload = {
         repo_id: selectedRepo.id,
