@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import {
   LogOut, RefreshCw, Link as LinkIcon, Trash2,
   Copy, Plus, X, Github, Book, Clock, Loader2,
-  ChevronDown, ChevronUp, Info
+  ChevronDown, ChevronUp, Info, Shield
 } from 'lucide-react';
 
 interface UserProfile {
