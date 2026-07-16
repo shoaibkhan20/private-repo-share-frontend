@@ -337,8 +337,8 @@ export default function DashboardPage() {
                           <div className="bg-silver-50/50 p-3 rounded-xl border border-silver-100">
                             <span className="text-[10px] font-bold text-silver-400 uppercase tracking-widest block mb-1">Visibility</span>
                             <span className="text-xs font-bold text-modernGray-700 flex items-center gap-1.5">
-                               <Shield className="h-3 w-3 text-red-400" />
-                               {repo.is_private ? 'Private Repository' : 'Public Repository'}
+                              <Shield className="h-3 w-3 text-red-400" />
+                              {repo.is_private ? 'Private Repository' : 'Public Repository'}
                             </span>
                           </div>
                           <div className="bg-silver-50/50 p-3 rounded-xl border border-silver-100 col-span-2 flex justify-between items-center">
@@ -520,10 +520,9 @@ export default function DashboardPage() {
                     <label htmlFor="emails" className="block text-sm font-bold text-modernGray-700 mb-1 ml-1">
                       Restrict to Emails
                     </label>
-                    <p className="text-[11px] text-silver-500 mb-2 ml-1 italic font-medium">Comma-separated list (e.g. user1@gmail.com, user2@me.com)</p>
+                    <p className="text-[11px] text-silver-500 mb-2 ml-1 italic font-medium">Comma-separated list (e.g. user1@gmail.com, user2@me.com) (optional)</p>
                     <textarea
                       id="emails"
-                      required
                       value={emails}
                       onChange={(e) => setEmails(e.target.value)}
                       placeholder="Enter emails allowed to access..."
