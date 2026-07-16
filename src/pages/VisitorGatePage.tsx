@@ -48,9 +48,19 @@ export default function VisitorGatePage() {
     
     try {
       setLoading(true);
-      await api.post(`/s/${slug}/request-otp`, { email });
-      setStatus('otp_entry');
-      toast.success('Verification code sent to your email');
+      const { data } = await api.post(`/s/${slug}/verify-email`, { email });
+      
+      // Direct access token bypass
+      if (data.access_token) {
+        localStorage.setItem('visitor_token', data.access_token);
+        toast.success('Access granted');
+        navigate(`/s/${slug}/view`);
+      } else {
+        /*
+        setStatus('otp_entry');
+        toast.success('Verification code sent to your email');
+        */
+      }
     } catch (error: any) {
       if (error.response?.status === 429) {
         toast.error('Too many requests. Please try again later.');
@@ -163,7 +173,8 @@ export default function VisitorGatePage() {
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none disabled:opacity-70 transition-colors"
               >
                 {loading ? <Loader2 className="animate-spin h-5 w-5 mr-2" /> : null}
-                Send Verification Code
+                {/* Send Verification Code */}
+                Access Repository
               </button>
             </form>
           )}
