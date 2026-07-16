@@ -25,6 +25,10 @@ export default function VisitorGatePage() {
         });
         if (data.valid === false) {
           setStatus('invalid');
+        } else if (data.access_token) {
+          localStorage.setItem('visitor_token', data.access_token);
+          toast.success('Access granted');
+          navigate(`/s/${slug}/view`);
         } else {
           setStatus('email_entry');
         }
