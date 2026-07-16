@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-modernGray-500 bg-silver-50;
+  }
+}
+
+@layer components {
+  .glass-bg {
+    @apply bg-white/70 backdrop-blur-md;
+  }
+  
+  .glass-border {
+    @apply border border-white/20;
+  }
+
+  .premium-card {
+    @apply bg-white/80 backdrop-blur-sm border border-silver-200/50 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .modern-button {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-95;
+  }
+
+  .modern-button-primary {
+    @apply modern-button bg-modernGray-900 text-white hover:bg-modernGray-800 shadow-sm hover:shadow-modernGray-900/20;
+  }
+
+  .modern-button-secondary {
+    @apply modern-button bg-white border border-silver-200 text-modernGray-700 hover:bg-silver-50 hover:border-silver-300;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-silver-300 rounded-full hover:bg-silver-400 transition-colors;
+  }
+}
+
+* {
+  @apply transition-colors duration-200;
+}

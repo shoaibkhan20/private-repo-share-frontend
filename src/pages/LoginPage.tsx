@@ -33,36 +33,52 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-silver-50 via-white to-modernGray-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <div className="h-16 w-16 bg-gray-900 rounded-xl flex items-center justify-center shadow-lg">
-            <Github className="h-10 w-10 text-white" />
+        <div className="flex justify-center mb-8">
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-silver-300 to-modernGray-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative h-20 w-20 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-silver-100">
+              <Github className="h-10 w-10 text-modernGray-900" />
+            </div>
           </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="text-center text-4xl font-extrabold text-modernGray-900 tracking-tight">
           Private Repo Share
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Securely share your private GitHub repositories with anyone.
+        <p className="mt-3 text-center text-base text-modernGray-500 max-w-xs mx-auto">
+          The elegant way to share your private GitHub repositories securely.
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
-          <button
-            onClick={handleLogin}
-            disabled={isLoading}
-            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:opacity-70 transition-colors"
-          >
-            {isLoading ? (
-              <Loader2 className="animate-spin h-5 w-5 mr-2" />
-            ) : (
-              <Github className="h-5 w-5 mr-2" />
-            )}
-            Authorize with GitHub
-          </button>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="premium-card py-10 px-6 sm:px-10 rounded-3xl">
+          <div className="space-y-6">
+            <p className="text-sm text-center text-modernGray-500 px-2">
+              Sign in with your GitHub account to manage and share your private repositories.
+            </p>
+            <button
+              onClick={handleLogin}
+              disabled={isLoading}
+              className="w-full modern-button-primary py-4 text-base shadow-lg"
+            >
+              {isLoading ? (
+                <Loader2 className="animate-spin h-5 w-5 mr-3" />
+              ) : (
+                <Github className="h-5 w-5 mr-3" />
+              )}
+              {isLoading ? 'Connecting...' : 'Continue with GitHub'}
+            </button>
+            <div className="flex items-center justify-center gap-2 text-xs text-silver-400 font-medium pt-2">
+              <div className="h-px w-8 bg-silver-200"></div>
+              <span>SECURE & ENCRYPTED</span>
+              <div className="h-px w-8 bg-silver-200"></div>
+            </div>
+          </div>
         </div>
+        <p className="mt-8 text-center text-xs text-silver-400">
+          By signing in, you agree to our Terms of Service and Privacy Policy.
+        </p>
       </div>
     </div>
   );

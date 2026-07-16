@@ -156,32 +156,34 @@ export default function OwnerViewerPage() {
 
   const renderTree = (nodes: RepoNode[], depth = 0) => {
     return (
-      <ul className="space-y-1">
-        {nodes.map(node => (
-          <li key={node.path}>
-            <div
-              className={`flex items-center gap-1.5 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-100 text-sm ${currentFilePath === node.path ? 'bg-gray-100 text-blue-600 font-medium' : 'text-gray-700'}`}
-              style={{ paddingLeft: `${depth * 12 + 8}px` }}
-              onClick={() => node.type === 'tree' ? handleFolderClick(node, nodes) : handleFileClick(node)}
-            >
-              {node.type === 'tree' ? (
-                <>
-                  {node.isOpen ? <ChevronDown className="h-3.5 w-3.5 text-gray-400" /> : <ChevronRight className="h-3.5 w-3.5 text-gray-400" />}
-                  <Folder className="h-4 w-4 text-blue-400 fill-blue-100" />
-                </>
-              ) : (
-                <>
-                  <span className="w-3.5" /> {/* Spacer for alignment */}
-                  <FileIcon className="h-4 w-4 text-gray-400" />
-                </>
+      <ul className="space-y-0.5">
+        {nodes.map(node => {
+          const isActive = currentFilePath === node.path;
+          return (
+            <li key={node.path}>
+              <div
+                className={`flex items-center gap-2 py-1.5 px-3 rounded-lg cursor-pointer transition-all text-sm group ${isActive ? 'bg-modernGray-900 text-white shadow-sm' : 'text-modernGray-600 hover:bg-silver-100 hover:text-modernGray-900'}`}
+                style={{ paddingLeft: `${depth * 12 + 12}px` }}
+                onClick={() => node.type === 'tree' ? handleFolderClick(node, nodes) : handleFileClick(node)}
+              >
+                <div className="flex items-center justify-center w-4">
+                  {node.type === 'tree' ? (
+                    node.isOpen ? <ChevronDown className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} /> : <ChevronRight className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
+                  ) : (
+                    <FileIcon className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
+                  )}
+                </div>
+                {node.type === 'tree' && (
+                  <Folder className={`h-4 w-4 ${isActive ? 'text-white/80' : 'text-silver-400 group-hover:text-modernGray-500'}`} />
+                )}
+                <span className="truncate font-medium">{node.name}</span>
+              </div>
+              {node.type === 'tree' && node.isOpen && node.children && (
+                renderTree(node.children, depth + 1)
               )}
-              <span className="truncate">{node.name}</span>
-            </div>
-            {node.type === 'tree' && node.isOpen && node.children && (
-              renderTree(node.children, depth + 1)
-            )}
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     );
   };
@@ -199,8 +201,9 @@ export default function OwnerViewerPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-900" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-silver-50">
+        <Loader2 className="h-10 w-10 animate-spin text-modernGray-900 mb-4" />
+        <p className="text-silver-500 font-bold uppercase tracking-widest text-xs">Loading Repository...</p>
       </div>
     );
   }
@@ -208,21 +211,31 @@ export default function OwnerViewerPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
-      <header className="h-14 border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 bg-gray-50 shrink-0">
-        <div className="flex items-center gap-3">
+      <header className="h-20 glass-bg border-b border-silver-200/50 flex items-center justify-between px-6 shrink-0 z-10">
+        <div className="flex items-center gap-6">
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors mr-2 border border-gray-300 bg-white rounded-md px-2.5 py-1.5 shadow-sm font-medium"
+            className="modern-button-secondary h-10 px-4 text-xs font-bold shadow-sm"
           >
-            <ArrowLeft className="h-4 w-4" /> Dashboard
+            <ArrowLeft className="h-4 w-4 mr-2" /> Dashboard
           </button>
-          <div className="flex items-center gap-2 text-gray-900 font-semibold">
-            <Github className="h-5 w-5" />
-            {repoInfo?.name || 'Repository'}
+          <div className="h-8 w-px bg-silver-200 hidden sm:block"></div>
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 bg-modernGray-900 rounded-xl flex items-center justify-center shadow-md">
+              <Github className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-bold text-modernGray-900 tracking-tight leading-none">
+                  {repoInfo?.name || 'Repository'}
+                </h1>
+                <span className="px-2 py-0.5 rounded-lg bg-modernGray-100 text-modernGray-500 text-[10px] font-bold uppercase tracking-widest border border-silver-200">
+                  <ShieldCheck className="h-3 w-3 inline mr-1" /> Owner View
+                </span>
+              </div>
+              <p className="text-[10px] text-silver-400 font-bold uppercase tracking-widest mt-1">Private Content Explorer</p>
+            </div>
           </div>
-          <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-xs font-medium flex items-center gap-1">
-            <ShieldCheck className="h-3 w-3" /> Owner View
-          </span>
         </div>
       </header>
 
@@ -230,11 +243,13 @@ export default function OwnerViewerPage() {
       <div className="flex-1 flex overflow-hidden">
 
         {/* Sidebar Tree */}
-        <aside className="w-64 border-r border-gray-200 bg-gray-50 flex flex-col shrink-0 overflow-hidden hidden md:flex">
-          <div className="p-3 border-b border-gray-200 font-medium text-sm text-gray-700 flex items-center gap-2">
-            <Folder className="h-4 w-4" /> Files
+        <aside className="w-72 border-r border-silver-200 bg-silver-50/30 flex flex-col shrink-0 overflow-hidden hidden md:flex">
+          <div className="p-4 border-b border-silver-200 flex items-center justify-between bg-white/50">
+             <div className="flex items-center gap-2 font-bold text-[10px] text-silver-400 uppercase tracking-widest">
+               <Folder className="h-3.5 w-3.5" /> Explorer
+             </div>
           </div>
-          <div className="flex-1 overflow-y-auto p-2">
+          <div className="flex-1 overflow-y-auto p-3 custom-scrollbar">
             {renderTree(fileTree)}
           </div>
         </aside>
@@ -242,16 +257,16 @@ export default function OwnerViewerPage() {
         {/* Content Area */}
         <main className="flex-1 flex flex-col overflow-hidden bg-white">
           {currentView === 'overview' ? (
-            <div className="flex-1 overflow-y-auto p-6 lg:p-10">
+            <div className="flex-1 overflow-y-auto p-8 lg:p-12 custom-scrollbar bg-silver-50/10">
               <div className="max-w-4xl mx-auto">
-                <div className="mb-8 pb-6 border-b border-gray-200">
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">{repoInfo?.name}</h1>
+                <div className="mb-10 pb-8 border-b border-silver-200">
+                  <h1 className="text-4xl font-extrabold text-modernGray-900 mb-4 tracking-tight">{repoInfo?.name}</h1>
                   {repoInfo?.description && (
-                    <p className="text-lg text-gray-600">{repoInfo.description}</p>
+                    <p className="text-xl text-modernGray-500 leading-relaxed font-medium">{repoInfo.description}</p>
                   )}
                 </div>
 
-                <div className="prose prose-blue max-w-none prose-pre:p-0 prose-pre:bg-transparent">
+                <div className="prose prose-silver max-w-none prose-pre:p-0 prose-pre:bg-transparent">
                   {readmeContent ? (
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
@@ -264,52 +279,56 @@ export default function OwnerViewerPage() {
                               style={vscDarkPlus}
                               language={match ? match[1] : 'text'}
                               PreTag="div"
-                              customStyle={{ borderRadius: '0.5rem', fontSize: '0.875rem' }}
+                              customStyle={{ borderRadius: '1rem', fontSize: '0.875rem', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}
                             >
                               {String(children).replace(/\n$/, '')}
                             </SyntaxHighlighter>
                           ) : (
-                            <code className={className} {...props}>{children}</code>
+                            <code className="bg-silver-100 text-modernGray-800 px-1.5 py-0.5 rounded-md font-mono text-sm" {...props}>{children}</code>
                           );
                         }
                       }}
                     >{readmeContent}</ReactMarkdown>
                   ) : (
-                    <div className="text-center py-12 text-gray-500 italic border-2 border-dashed border-gray-200 rounded-lg">
-                      No README.md found in the root directory.
+                    <div className="text-center py-20 bg-white border-2 border-dashed border-silver-200 rounded-3xl">
+                      <FileIcon className="h-10 w-10 text-silver-200 mx-auto mb-4" />
+                      <p className="text-silver-400 italic font-medium">No README.md found in the root directory.</p>
                     </div>
                   )}
                 </div>
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col overflow-hidden bg-[#1e1e1e]">
               {/* File Header */}
-              <div className="h-12 border-b border-gray-200 flex items-center px-4 gap-4 bg-gray-50 shrink-0">
+              <div className="h-14 border-b border-white/5 flex items-center px-6 gap-6 bg-[#1a1a1a] shrink-0">
                 <button
                   onClick={() => { setCurrentView('overview'); setCurrentFilePath(null); }}
-                  className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  className="flex items-center gap-2 text-xs font-bold text-silver-400 hover:text-white transition-colors uppercase tracking-widest"
                 >
-                  <ArrowLeft className="h-4 w-4" /> Back to Overview
+                  <ArrowLeft className="h-4 w-4" /> Back
                 </button>
-                <div className="h-4 w-px bg-gray-300"></div>
-                <div className="text-sm font-mono text-gray-600 truncate flex-1">
+                <div className="h-5 w-px bg-white/10"></div>
+                <div className="text-xs font-mono text-silver-300 truncate flex-1 tracking-tight">
+                  <span className="text-silver-500 font-bold mr-2 uppercase text-[10px]">Path</span>
                   {currentFilePath}
                 </div>
               </div>
 
               {/* Code Viewer */}
-              <div className="flex-1 overflow-auto bg-[#1e1e1e]">
+              <div className="flex-1 overflow-auto custom-scrollbar">
                 {fileLoading ? (
-                  <div className="h-full flex items-center justify-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+                  <div className="h-full flex flex-col items-center justify-center gap-4">
+                    <Loader2 className="h-8 w-8 animate-spin text-silver-600" />
+                    <p className="text-silver-600 text-[10px] font-bold uppercase tracking-widest">Fetching Content...</p>
                   </div>
                 ) : (
                   <SyntaxHighlighter
                     language={currentFilePath ? getLanguageFromPath(currentFilePath) : 'text'}
                     style={vscDarkPlus}
-                    customStyle={{ margin: 0, minHeight: '100%', borderRadius: 0, fontSize: '14px' }}
+                    customStyle={{ margin: 0, minHeight: '100%', borderRadius: 0, fontSize: '14px', background: 'transparent' }}
                     showLineNumbers={true}
+                    lineNumberStyle={{ color: 'rgba(255,255,255,0.2)', paddingRight: '1.5rem' }}
                   >
                     {fileContent}
                   </SyntaxHighlighter>
